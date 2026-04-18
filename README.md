@@ -44,6 +44,19 @@ command - kubectl cluster-info --context archanacluster
 
 command - kubectl get nodes
 
+Step 6: 
+create one namespace called nginx Command - kubectl create ns nginx 
+
+Step 7:
+Just Like: Docker run
+By this command - kubectl run nginx --image=nginx -n nginx (pod/nginx created)
+
+Step 8 : once pod created how will you access it.
+command - kubectl get pods -n nginx
+
+#But Problem is i will forgot command.
+SO, USE YML File(that also called MANIFEST FILE) to write command.
+
 
 
 
