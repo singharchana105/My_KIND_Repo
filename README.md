@@ -36,8 +36,14 @@ nodes:
 
 ```
 
+
 Step 5: 
-kind create cluster --name archanacluster --config=config.yml
+command - kind create cluster --name archanacluster --config=config.yml
+
+command - kubectl cluster-info --context archanacluster
+
+command - kubectl get nodes
+
 
 
 
