@@ -2,8 +2,7 @@
 
 Step 1. vim Install_kind.sh
 
-Step 2. Installing KIND and kubectl and Docker using shell script Link: [script](https://github.com/LondheShubham153/kubestarter/blob/main/kind-cluster/install.sh):
-
+Step 2. Installing KIND and kubectl and Docker using shell script Link path : KIND_Installation_Script.sh
 
 Step 3. After Running docker ps command ERROR Through permission denied.
 sudo usermod -aG docker $USER && newgrp docker
