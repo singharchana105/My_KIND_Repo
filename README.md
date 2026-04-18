@@ -1,5 +1,7 @@
 ## KIND Cluster Setup Guide
 
+vim Install_kind.sh
+
 ## 1. Installing KIND and kubectl and Docker using shell script
 
 #!/bin/bash
@@ -89,6 +91,7 @@ echo "🎉 Docker, Kind, and kubectl installation complete!"
 
 
 
-# After Running Docker ps ERROR Through permission denied.
+# After Running docker ps command ERROR Through permission denied.
 sudo usermod -aG docker $USER && newgrp docker
 now if you run docker ps. Docker is running.
+kubectl version
