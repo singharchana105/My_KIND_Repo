@@ -104,7 +104,11 @@ spec:
 command - kubectl apply -f pod.yml  (pod/nginx-pod created)
 command - kubectl get pods -n nginx (pod is running)
 
-Step 11: Now how can i enter inside the nginx pod?
-command - kebectl exec -it nginx-pod -n nginx -- bash
+If YOU WANT TO KNOW ALL DETAILS OF POD
+VVVVVVVVVVV.IIIIII command - kubectl describe pod/nginx-pod -n nginx
+
+Step 11: Now how can i enter inside the pod?
+VVVVVVVVVVV.IIIIII command - kebectl exec -it nginx-pod -n nginx -- bash
+use exit command to get out from pod.
 
 
