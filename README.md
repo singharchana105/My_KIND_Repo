@@ -56,8 +56,55 @@ command - kubectl get pods -n nginx
 
 #But Problem is i will forgot command.
 SO, USE YML File(that also called MANIFEST FILE) to write command.
+Before that delete all command that was excuted already.
+command - kubectl delete pod nginx -n nginx (pod "nginx deleted)
+command - kubectl delete ns nginx (namespace "nginx" deleted)
 
 
+Step 9:
+Now make folder name is nginx
+command - cd nginx
+Now make MANIFEST FILE 
+command - vim namespace.yml ( i am creating a file in which i will write code to make namespace)
 
+```yaml
+
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: nginx
+
+```
+
+cmd - kubectl apply -f namespace.yml    (namespace/nginx created)
+
+# kubectl apply and kubectl create me difference?
+if u use create with kubctl it is created single time.
+but if use apply with kubctl then item get created and updated also.
+
+Command - kubectl get namespace 
+
+step 10: Now make pod.yml Mainefest file.
+command - vim pod.yml
+```yaml
+
+kind: pod
+apiVersion: v1
+metadata:
+  name: nginx-pod
+  namespace: nginx
+spec:
+  containers:
+     - name: nginx
+       image: nginx:latest
+       ports:
+        - containerPort: 80
+
+```
+command - kubectl apply -f pod.yml  (pod/nginx-pod created)
+command - kubectl get pods -n nginx (pod is running)
+
+Step 11: Now how can i enter inside the nginx pod?
+command - kebectl exec -it nginx-pod -n nginx -- bash
 
 
