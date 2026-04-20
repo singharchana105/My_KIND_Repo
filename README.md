@@ -184,16 +184,16 @@ command :  kubectl scale deployment my-app --replicas=5
 
 ``` yaml
 
-apiVersion: batch/v1
 kind: Job
+apiVersion: batch/v1
 metadata:
-  name: my-job
+  name: job
 spec:
   completions: 1
   template:
     spec:
       containers:
-      - name: my-container
+      - name: container
         image: busybox
         command: ["echo", "Hello Kubernetes Job"]
       restartPolicy: Never
