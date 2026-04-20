@@ -187,19 +187,89 @@ command :  kubectl scale deployment my-app --replicas=5
 kind: Job
 apiVersion: batch/v1
 metadata:
-  name: job
+  name: demo-job
 spec:
   completions: 1
+  parallelism: 1
   template:
+   metadata:
+      name: demo-job-pod
+      labels:
+        app: batch-task
     spec:
       containers:
-      - name: container
-        image: busybox
-        command: ["echo", "Hello Kubernetes Job"]
+      - name: batch-container
+        image: busybox:latest
+        command: ["sh", "-c" , "echo Hello Dosto! && sleep 10"]
       restartPolicy: Never
 
 ```
+command :- kubectl get pods -n nginx
 
+command : kubectl logs pod/pod ka name -n nginx( Iss command se jo output aana tha job command me vo dikhayega)
+
+Note : pods ki bhi lifecycle hoti hai.
+1. contener creating
+2. Running
+3. Terminating 
+4. Completed
+5. Imagepullbackup
+
+
+# CronJob : A task that you can schedule
+
+Lets go and make a cron job for taking backup of one folder in another folder every minute
+
+vim cron-job.yml
+
+```yaml
+
+kind: Cronjob
+apiversion: batch/v1
+metadata:
+  name: minute-backup
+  namespace: nginx
+
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+     template:
+      metadata:
+       name: minute-backup
+       labels:
+         app: minute-backup
+ spec:
+   containers:
+    - name: backup-container
+      image: busybox
+      command:
+      - sh
+      - -c
+      - >
+        echo "Backup Started" ;
+        mkdir -p /backups &&
+        mkdir -p /data &&
+        cp -r /demo-data /backups &&
+        echo "Backup Completed" ;
+     volumeMounts:
+      - name: data-volume
+        mountPath: /demo-data
+      - name: backup-volume
+        mountPath: /backups
+  restartPolicy: OnFailure
+  volumes:
+   - name: data-volume
+     hostPath:
+       path: /demo-data
+       type: DirectoryOrCreate
+   - name: backup-volume
+     hostPath:
+       path: /backups
+       type: DirectoryOrCreate
+
+
+```
 
 
 
