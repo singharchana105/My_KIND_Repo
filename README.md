@@ -115,3 +115,68 @@ VVVVVVVVVVV.IIIIII command - kebectl exec -it nginx-pod -n nginx -- bash
 use exit command to get out from pod.
 
 
+Dis-advantage to create kind: cluster
+
+If you create Kind Cluster pods:- You made pods one by one.
+Pods crash hone par auto-restart nahi honge ❌
+Scaling manually karna padega ❌
+Rolling updates nahi milenge ❌
+
+# To resole this problem use Deployemnt 
+
+Deployment → ReplicaSet → Pods
+Kind : creates the cluster
+kubectl : → communicates with the cluster
+Kubernetes Deployment → manages the pods
+
+🚀 what Deployment will do
+1. Scaling : command - kubectl scale deployment my-app --replicas=5 (Only this command run 5 pods created)
+2. Auto-healing : if any pod get deleted/crashed DEPLOYEMENT will automatically created pod.
+3. Rolling Update : kubectl set image deployment/my-app nginx=nginx:latest (NEW/OLDER VERSION CREATED WITHOUT ANY DOWNTIME. Means sare container ko ek sath down nhi karta kuch ko up rakhta hai kuch container ko create karta hai fir baki ke container ko up kar deta hai)
+4. Rollback : kubectl rollout undo deployment my-app (Go to previous Version)
+
+
+Now Steps How to create kind deployment
+Step 1: vim deployemt.yml
+
+```yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+       - containerPort: 80
+
+
+```
+
+
+Step 2 : command - kubectl apply -f deployement.yml
+command : kubectl get pods -n nginx
+command :  kubectl scale deployment my-app --replicas=5
+
+
+
+
+
+
+
+
+   
+
+
