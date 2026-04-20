@@ -174,6 +174,37 @@ command :  kubectl scale deployment my-app --replicas=5
 
 
 
+# What is Job : ek task jo complete hone ke baad khatam ho jata hai”
+
+1. Pod start hota hai
+2. Task run hota hai
+3. Task complete → Pod Completed state me chala jata hai
+4. Agar fail ho jaye → Job retry karta hai
+
+
+``` yaml
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: my-job
+spec:
+  completions: 1
+  template:
+    spec:
+      containers:
+      - name: my-container
+        image: busybox
+        command: ["echo", "Hello Kubernetes Job"]
+      restartPolicy: Never
+
+```
+
+
+
+
+
+
 
 
 
