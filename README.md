@@ -174,7 +174,7 @@ command :  kubectl scale deployment my-app --replicas=5
 
 
 
-# What is Job : ek task jo complete hone ke baad khatam ho jata hai”
+# What is Job : Ek task jo complete hone ke baad khatam ho jata hai”
 
 1. Pod start hota hai
 2. Task run hota hai
