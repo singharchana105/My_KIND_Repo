@@ -300,6 +300,7 @@ kind:PersistentVolume
 apiVersion: v1
 metadata:
   name: local-pv
+  namespace: nginx
   labels:
     app: local
 spec:
@@ -321,14 +322,61 @@ Apply it - kubectl get pv
 Now I have to claim that PV
 
 For that i have to make one more Manifest file. 
-vim persi
+vim persitentVolumeClaim.yml
 
 ```YMAL
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: local-pvc
+  namespace: nginx
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: local-storage
 
 
+```
+Apply it:- kubectl apply -f persitentVolumeClaim.yml
 
 
+pehle jo Deployment banye the uska data delete ho jata tha usko Volumemount kardenge iss PVC ke sath. 
 
+```yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+       - containerPort: 80
+      volumeMounts:
+       - mountPath: /var/www/html
+         name: my-volume
+      volumes:
+        - name: my-volume
+          persistentVolumeClaim:
+             claimName: local-pvc
+
+
+```
 
 
 
