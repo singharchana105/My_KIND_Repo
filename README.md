@@ -283,13 +283,16 @@ spec:
 ##Persistent Volume (PV) && Persistent Volume Claim (PVC)##
 Both are used to store data of pods, so that if pods get down/crashed data will not lost.
 
-Persistent Volume (PV) - Actual Storage (disk space in cluster)
+Persistent Volume (PV) - Actual Storage (disk space in cluster). Host system EC2 have 30GB storage. Then 1GB data ka PV bana liye.
 
-Persistent Volume Claim (PVC) - A request for that storage.
+Persistent Volume Claim (PVC) - A request for that storage. (ab 1GB ko pods ko assign karenge)
 
 eg:- PV - a storage resource (like a hard-derive)
      PVC - a user asking for some storage.
 
+Now lets make Menistfile of PV
+
+Step1 vim persistentVolume.yml
 
   ```YAML
 
@@ -311,8 +314,16 @@ spec:
 
 ```
 
+Apply it :- kubectl apply -f persistentVolume.yml
+Apply it - kubectl get pv 
      
 
+Now I have to claim that PV
+
+For that i have to make one more Manifest file. 
+vim persi
+
+```YMAL
 
 
 
