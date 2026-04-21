@@ -280,6 +280,40 @@ spec:
 
 ```
 
+##Persistent Volume (PV) && Persistent Volume Claim (PVC)##
+Both are used to store data of pods, so that if pods get down/crashed data will not lost.
+
+Persistent Volume (PV) - Actual Storage (disk space in cluster)
+
+Persistent Volume Claim (PVC) - A request for that storage.
+
+eg:- PV - a storage resource (like a hard-derive)
+     PVC - a user asking for some storage.
+
+
+  ```YAML
+
+kind:PersistentVolume
+apiVersion: v1
+metadata:
+  name: local-pv
+  labels:
+    app: local
+spec:
+   capacity:
+      storage: 1Gi
+   accessModes:
+      - ReadWriteOnce
+   persistentvolumeReclaimPolicy: Retain
+   storageClassName: local-storage
+  hostPath:
+     path: /mnt/data
+
+```
+
+     
+
+
 
 
 
