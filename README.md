@@ -117,22 +117,31 @@ use exit command to get out from pod.
 
 Dis-advantage to create kind: cluster
 
-If you create Kind Cluster pods:- You made pods one by one.
-Pods crash hone par auto-restart nahi honge ❌
-Scaling manually karna padega ❌
-Rolling updates nahi milenge ❌
+If you create Kind Cluster pods:- You made pods one by one. and if
+
+1. Pods crash hone par auto-restart nahi honge ❌
+
+2. Scaling manually karna padega ❌
+
+3. Rolling updates nahi milenge ❌
 
 # To resole this problem use Deployemnt 
 
 Deployment → ReplicaSet → Pods
+
 Kind : creates the cluster
+
 kubectl : → communicates with the cluster
+
 Kubernetes Deployment → manages the pods
 
 🚀 what Deployment will do
 1. Scaling : command - kubectl scale deployment my-app --replicas=5 (Only this command run 5 pods created)
+   
 2. Auto-healing : if any pod get deleted/crashed DEPLOYEMENT will automatically created pod.
+
 3. Rolling Update : kubectl set image deployment/my-app nginx=nginx:latest (NEW/OLDER VERSION CREATED WITHOUT ANY DOWNTIME. Means sare container ko ek sath down nhi karta kuch ko up rakhta hai kuch container ko create karta hai fir baki ke container ko up kar deta hai)
+
 4. Rollback : kubectl rollout undo deployment my-app (Go to previous Version)
 
 
