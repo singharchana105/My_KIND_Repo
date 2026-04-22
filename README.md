@@ -438,6 +438,13 @@ site will running in browser PublicIP:81
 ## Maka a mini project from github
 
 Step 1 : git clone URL
+Step 2 : docker build -t note-app-k8s .
+Step 3 : docker images   ( images note-app-k8s locally not working. isko docker hub par phuchana padega)
+Step 4 : Login DockerHub. Go to account setting and go in peronal access tokens. Generate token. it will give you Run and password
+Step 5 : paste run command in CLI  and password. Login succeeded
+Step 6 : docker build -t note-app-k8s .
+
+
 
 
 
