@@ -453,9 +453,85 @@ Step 7 : docker image tag note-app-k8s:latest archanakidocker/note-app-k8s:lates
 
 Step 8 : docker images
 
-Step 9 : docker push archanakidocker/note-app-k8s:latest   (Pushed )
+Step 9 : docker push archanakidocker/note-app-k8s:latest   (Pushed in my docker hub repo)
 
-Step 10. 
+Step 10. mkdir k8s, cd k8s,
+
+Step 11. vim deployment.yml
+
+```yml
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: notes-app-deployment
+  labels:
+    app: notes-app
+   namespace: notes-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notes-app
+  template:
+    metadata:
+      labels:
+        app: notes-app
+    spec:
+      containers:
+      - name: notes-app
+        image: archanakidocker/note-app-k8s
+        ports:
+        - containerPort: 8000
+
+```
+
+command- kubectl apply -f deployment.yml
+
+Step 12: vim namespace.yml
+
+```yml
+kind: namespace
+apiVersion: v1
+metadata:
+  name: notes-app
+
+```
+
+command- kubectl apply -f namespace.yml
+
+Step 13: vim service.yml
+
+```yml
+kind: service
+apiVersion: v1
+metadata:
+  name: notes-app
+  namespace: notes-app
+spec:
+  selector:
+    app: notes-app
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+  type: ClusterIP
+
+
+```
+command- kubectl apply -f service.yml
+
+
+ Step 14: kubectl get pods -n notes-app    (container is creating)
+
+ Step 15: kubectl port-forward service/notes-app-service -n notes-app 8000:8000 --address=0.0.0.0
+
+ Step 16: Go in EC2 add security group port no- 8000
+
+ Step 17 : No copy Ip of EC2 192.62.36.45:8000 ( Application running)
+ 
+
+ 
 
 
 
