@@ -449,6 +449,8 @@ Step 5 : paste run of Tocken command in CLI  and password. Login succeeded
 
 Step 6 : docker build -t note-app-k8s .
 
+(permission denied ka error may be aaye so for that command : sudo usermod -aG docker $USER)
+
 Step 7 : docker image tag note-app-k8s:latest archanakidocker/note-app-k8s:latest (tag your image with docker hub)
 
 Step 8 : docker images
