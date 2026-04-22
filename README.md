@@ -397,7 +397,48 @@ command - ls , cd mnt,ls,data exit
 
 
 
-Now 
+Now ab iss pods ko user kyese access karenge. Using SERVICES this will expose to outer world.
+
+vim service.yml
+
+```yaml
+kind: Service
+apiVersion: v1
+mrtadata:
+  name: nginx-service
+  namespace: nginx
+spec:
+  selector:
+    app: nginx
+  ports:
+    -protocol:TCP
+     port: 80
+     targetPort: 80
+  type: ClusterIP
+
+```
+
+command - kubectl apply -f service.yml
+command - kubectl get all -n nginx
+
+
+Now its time to access my service on the browser
+
+command - kubectl port-forward service/nginx-service -n nginx 80:80 --address=0.0.0.0 ( unable to listen on port 80 permission denied)
+
+command - sudo -E kubectl port-forward service/nginx-service -n nginx 80:80 --address=0.0.0.0 ( listener failed bind: address already in use unable to listen on any requested port 80 80)
+
+command - sudo -E kubectl port-forward service/nginx-service -n nginx 81:80 --address=0.0.0.0 (add security rule in EC2 for port 81)
+
+site will running in browser PublicIP:81 
+
+
+
+
+## Maka a mini project from github
+
+Step 1 : git clone URL
+
 
 
    
