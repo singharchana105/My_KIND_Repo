@@ -531,6 +531,11 @@ command- kubectl apply -f service.yml
  Step 16: Go in EC2 add security group port no- 8000
 
  Step 17 : No copy Ip of EC2 192.62.36.45:8000 ( Application running)
+
+
+
+ # Ingress ?
+ 
  
 
  
