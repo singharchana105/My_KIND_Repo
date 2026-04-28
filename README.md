@@ -542,7 +542,78 @@ command- kubectl apply -f service.yml
 
  Namespace should be same.
 
+# Step 1. Vim deployment.yml  -> namespace change notes-app to nginx.
+
+``` 
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: notes-app-deployment
+  labels:
+    app: notes-app
+   namespace: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notes-app
+  template:
+    metadata:
+      labels:
+        app: notes-app
+    spec:
+      containers:
+      - name: notes-app
+        image: archanakidocker/note-app-k8s
+        ports:
+        - containerPort: 8000
+```
+
+
+# Step 2. vim service.yml     -> namespace change note-app to nginx
+
+```yml
+kind: service
+apiVersion: v1
+metadata:
+  name: notes-app
+  namespace: nginx
+spec:
+  selector:
+    app: notes-app
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+  type: ClusterIP
+
+```
  
+# Step 3. Note : kubectl get deployment -n notes-app 
+ 
+        kubectl delete deployment/notes-app-deployment -n  notes-app
+
+        similary  kubectl delete service/notes-app-service -n notes-app
+
+        similarly kubectl delete ns notes-app
+
+ I am delete this because i have changes there namesapce.
+
+ # Step 4. 
+ kubectl apply -f deployment.yml -f service.yml
+
+ kubectl get pods -n nginx
+
+ kubectl get svc -n nginx
+
+ # Step 5. Ingress controller are used to help in routing at cluster level.
+
+ kubectl apply -f https://kind.sigs.k8s.io/examples/ingress/usage.yaml
+
+  
+
+ 
+
  
  
 
