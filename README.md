@@ -534,7 +534,15 @@ command- kubectl apply -f service.yml
 
 
 
- # Ingress ?
+ # Ingress ? Resource that manage traffic and routes.
+ 
+ /nginx -> open nginx 
+ 
+ /app -> open jango app
+
+ Namespace should be same.
+
+ 
  
  
 
