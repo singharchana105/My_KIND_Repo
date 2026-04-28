@@ -608,9 +608,62 @@ spec:
 
  # Step 5. Ingress controller are used to help in routing at cluster level.
 
- kubectl apply -f https://kind.sigs.k8s.io/examples/ingress/usage.yaml
+command for ingress controller - go to folder    ->     cd /home/ubuntu/kubernetes-in-one-shot
 
-  
+Run this    ->     kubectl apply -f https://kind.sigs.k8s.io/examples/ingress/usage.yaml
+
+Now ingress controller is all set. kubectl get ns -> ingress-nginx namespace created.
+
+kubectl get pods -n ingress-nginx
+
+kubectl get svc -n ingress-nginx
+
+# Step 6. Now go to nginx folder and create vim ingress.yml
+
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-notes-ingress
+  namespace: nginx
+spec:
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: /nginx
+        backend:
+          service:
+            name: nginx-service
+            port:
+              number: 80
+      - pathType: Prefix
+        path: /app
+        backend:
+          service:
+            name: notes-app-service
+            port:
+              number: 8000
+
+```
+
+kubectl apply -f ingress.yml
+
+kubectl get ing -n nginx  (ip address is missing so for getting it ingress controller will exposes)
+
+kubectl get all -n nginx
+
+# Step 7. Now Ingress controller has exposed
+
+kubectl get svc -n ingress-nginx   ( you will get ingress-nginx-controller name)
+
+Exposed command - kubectl port-forward service/ingress-nginx-controller -n ingress-nginx 80:80 --address=0.0.0.0   (if this giving an error of permission denied)
+
+command - sudo -E kubectl port-forward service/ingress-nginx-controller -n ingress-nginx 80:80 --address=0.0.0.0  (port forwarding)
+
+it means that in port 80 ingress controller run.
+
+# Step 8. In Ec2 add port 80 in inbound rule.
 
  
 
