@@ -667,7 +667,9 @@ it means that in port 80 ingress controller run.
 
 # Step 8. In Ec2 add port 80 in inbound rule.
 
- 
+
+
+ # StatefulSets: 
 
  
  
