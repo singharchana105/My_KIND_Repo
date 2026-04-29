@@ -704,7 +704,7 @@ spec:
       labels:
         app: mysql
     spec:
-      
+      serviceName: mysql-service
       containers:
       - name: mysql
         image: mysql:8.0
@@ -728,9 +728,68 @@ spec:
           requests:
            storage: 1Gi
 ```
- 
- 
 
+**Step 3: vim service.yml**
+
+it is a head less service means clusterIP will be None. In future this service will not expose. it will only used for internal purpose.
+
+```
+kind: Service
+sppVersion: v1
+metadata:
+ name: mysql-service
+ namespace: mysql
+spec:
+ clusterIP: None
+ selector:
+   app: mysql
+ ports:
+ - name: mysql
+   protocol: TCP
+   port: 3306
+   targetport: 3306
+```
+
+**Step 4:**
+kubectl apply -f service.yml
+
+kubectl apply -f statefulset.yml
+
+kubectl get pods -n mysql
+
+watch kubectl get pods -n mysql (ctrl+c to exit)
+
+
+**Step 5.**
+kubectl get svc -n mysql
+
+when you want to access this application by command -> ku
+
+**Step 6.**
+kubectl get pods -n mysql 
+kubectl exec -it podsname -n mysql --bash
+(You will enter in mysql)
+mysql -u root -p
+enterpassword - 
+
+app is running
+
+**Step 7.**
+kubectl delete pod mysql -podname -n mysql
+
+kubectl get pods -n mysql  ( after deletion same name ka pods created)
+That the speciallity of StatefullSets. (Bcz In deployment if pods delete it will created by randome name)
+
+
+## Config Map & Secrets:
+
+
+
+
+
+
+
+ 
  
 
 
