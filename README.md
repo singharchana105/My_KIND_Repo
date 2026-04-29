@@ -783,7 +783,8 @@ That the speciallity of StatefullSets. (Bcz In deployment if pods delete it will
 
 ## Config Map & Secrets:
 
-env variable or values should be in file.
+# Config Map:
+env variable or values should be in file. It is plan text key value pair.
 **Step 1.**
 vim configMap.yml
 ```
@@ -827,12 +828,12 @@ spec:
        env:
        -name: MYSQL_ROOT_PASSWORD
         value: root
-         **- name: MySQL_DATABASE**
+ **    - name: MySQL_DATABASE**
         valueFrom:
-          configMapKeyref:
+          configMapKeyRef:
             name: mysql-config-map
             key: MYSQL_DATABASE
-
+ **
        volumeMounts:
         - name: mysql-data
           mountPath: /var/lib/mysql
@@ -845,7 +846,92 @@ spec:
           requests:
            storage: 1Gi
 
+```
 
+** adding configmap in ststefulset.yml 
+
+**Step 3.**
+kubectl get pods -n mysql 
+kubectl exec -it podsname -n mysql --bash
+(You will enter in mysql)
+mysql -u root -p
+enterpassword -
+
+# Secrets: key value are encrypted
+
+**Step 1.** vim secrets.yml
+```
+kind: Secret
+apiVersion: v1
+metadata:
+ name: mysql-secret
+ namespace: mysql
+data:
+  MYSQL_ROOT_PASSWORD: cm9vdA0=     #(base64 encode kar ke dalenge)(In terminal echo "root" | base64 and hit enter)(if u want to keep paasword as root)
+
+```
+
+**Step 2.**
+vim statefullsets.yml
+
+```
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: mysql-statefulset
+  namespace: mysql
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mysql
+   
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      serviceName: mysql-service
+      containers:
+      - name: mysql
+        image: mysql:8.0
+        ports:
+        - containerPort: 3306
+       env:
+   **  -name: MYSQL_ROOT_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: mysql-secret
+            key: MYSQL_ROOT_PASSWORD
+   **   
+       - name: MySQL_DATABASE**
+        valueFrom:
+          configMapKeyRef:
+            name: mysql-config-map
+            key: MYSQL_DATABASE
+ 
+       volumeMounts:
+        - name: mysql-data
+          mountPath: /var/lib/mysql
+      volumeClaimTemplates:
+        - metadata:
+           name: mysql-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+          resources:
+          requests:
+           storage: 1Gi
+
+```
+**Step 3.**
+kubectl get pods -n mysql 
+
+kubectl exec -it podsname -n mysql --bash
+(You will enter in mysql)
+
+mysql -u root -p
+
+enterpassword - 
 
 
 
