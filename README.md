@@ -676,20 +676,17 @@ But mysql,mongoDB are statefull application. -> statefulsets
 
 # Make statefulsets of MYSQL Project
 
-Step 1. vim namespace.yml
+**Step 1. create a name space - vim namespace.yml**
 
 ```
 kind: Namespace
-
 apiVersion: v1
-
 metadata: 
-
   name: mysql
 ```
 command - kubectl apply -f namespace 
 
-Step 2. vim statefulsets.yml
+**Step 2. vim statefulsets.yml**
 ```
 kind: StatefulSet
 apiVersion: apps/v1
