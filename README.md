@@ -569,8 +569,7 @@ spec:
         - containerPort: 8000
 ```
 
-
-# Step 2. vim service.yml     -> namespace change note-app to nginx
+ Step 2. vim service.yml     -> namespace change note-app to nginx
 
 ```yml
 kind: service
@@ -589,7 +588,7 @@ spec:
 
 ```
  
-# Step 3. Note : kubectl get deployment -n notes-app 
+Step 3. Note : kubectl get deployment -n notes-app 
  
         kubectl delete deployment/notes-app-deployment -n  notes-app
 
@@ -599,14 +598,14 @@ spec:
 
  I am delete this because i have changes there namesapce.
 
- # Step 4. 
+ Step 4. 
  kubectl apply -f deployment.yml -f service.yml
 
  kubectl get pods -n nginx
 
  kubectl get svc -n nginx
 
- # Step 5. Ingress controller are used to help in routing at cluster level.
+ Step 5. Ingress controller are used to help in routing at cluster level.
 
 command for ingress controller - go to folder    ->     cd /home/ubuntu/kubernetes-in-one-shot
 
@@ -618,7 +617,7 @@ kubectl get pods -n ingress-nginx
 
 kubectl get svc -n ingress-nginx
 
-# Step 6. Now go to nginx folder and create vim ingress.yml
+Step 6. Now go to nginx folder and create vim ingress.yml
 
 ```
 apiVersion: networking.k8s.io/v1
@@ -655,7 +654,7 @@ kubectl get ing -n nginx  (ip address is missing so for getting it ingress contr
 
 kubectl get all -n nginx
 
-# Step 7. Now Ingress controller has exposed
+Step 7. Now Ingress controller has exposed
 
 kubectl get svc -n ingress-nginx   ( you will get ingress-nginx-controller name)
 
@@ -665,11 +664,71 @@ command - sudo -E kubectl port-forward service/ingress-nginx-controller -n ingre
 
 it means that in port 80 ingress controller run.
 
-# Step 8. In Ec2 add port 80 in inbound rule.
+Step 8. In Ec2 add port 80 in inbound rule.
 
 
 
- # StatefulSets: 
+# StatefulSets: Pods carry state. when i will delete one pod in statefulset. same number with same name pod will created.
+
+jango,flask,springboot all these application ka state maintain nhi hua tab bhi chalta hai. -> Deployment, Replicasets, Daemonsets
+
+But mysql,mongoDB are statefull application. -> statefulsets
+
+# Make statefulsets of MYSQL Project
+
+Step 1. vim namespace.yml
+
+--- 
+kind: Namespace
+apiVersion: v1
+metadata: 
+  name: mysql
+
+---
+kubectl apply -f namespace 
+
+Step 2. vim statefulsets.yml
+
+--- 
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: mysql-statefulset
+  namespace: mysql
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mysql
+   
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      
+      containers:
+      - name: mysql
+        image: mysql:8.0
+        ports:
+        - containerPort: 3306
+       env:
+       -name: MYSQL_ROOT_PASSWORD
+        value: root
+       - name: MySQL_DATABASE
+        value: devops
+
+       volumeMounts:
+        - name: mysql-data
+          mountPath: /var/lib/mysql
+      volumeClaimTemplates:
+        - metadata:
+           name: mysql-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+          resources:
+          requests:
+           storage: 1Gi
 
  
  
