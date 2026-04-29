@@ -1,16 +1,16 @@
 ## KIND Cluster Setup Guide
 
-Step 1. vim Install_kind.sh
+**Step 1. vim Install_kind.sh**
 
-Step 2. Installing KIND and kubectl and Docker using shell script Link path : KIND_Installation_Script.sh
+**Step 2. Installing KIND and kubectl and Docker using shell script Link path : KIND_Installation_Script.sh**
 
-Step 3. After Running docker ps command ERROR Through permission denied.
+**Step 3. After Running docker ps command ERROR Through permission denied.**
 sudo usermod -aG docker $USER && newgrp docker
 
 now if you run docker ps. Docker is running.
 kubectl version
 
-Step 4: Setting Up the KIND Cluster
+**Step 4: Setting Up the KIND Cluster**
 Create a kind-config.yaml file:
 ```yaml
 
@@ -37,21 +37,21 @@ nodes:
 ```
 
 
-Step 5: 
+**Step 5:**
 command - kind create cluster --name archanacluster --config=config.yml
 
 command - kubectl cluster-info --context archanacluster
 
 command - kubectl get nodes
 
-Step 6: 
+**Step 6:**
 create one namespace called nginx Command - kubectl create ns nginx 
 
-Step 7:
+**Step 7:**
 Just Like: Docker run
 By this command - kubectl run nginx --image=nginx -n nginx (pod/nginx created)
 
-Step 8 : once pod created how will you access it.
+**Step 8 : once pod created how will you access it.**
 command - kubectl get pods -n nginx
 
 #But Problem is i will forgot command.
@@ -61,7 +61,7 @@ command - kubectl delete pod nginx -n nginx (pod "nginx deleted)
 command - kubectl delete ns nginx (namespace "nginx" deleted)
 
 
-Step 9:
+**Step 9:**
 Now make folder name is nginx
 command - cd nginx
 Now make MANIFEST FILE 
@@ -78,13 +78,13 @@ metadata:
 
 cmd - kubectl apply -f namespace.yml    (namespace/nginx created)
 
-# kubectl apply and kubectl create me difference?
+**kubectl apply and kubectl create me difference?**
 if u use create with kubctl it is created single time.
 but if use apply with kubctl then item get created and updated also.
 
 Command - kubectl get namespace 
 
-step 10: Now make pod.yml Mainefest file.
+**step 10: Now make pod.yml Mainefest file.**
 command - vim pod.yml
 ```yaml
 
@@ -109,7 +109,7 @@ If YOU WANT TO KNOW ALL DETAILS OF POD
 
 VVVVVVVVVVV.IIIIII command - kubectl describe pod/nginx-pod -n nginx
 
-Step 11: Now how can i enter inside the pod?
+**Step 11: Now how can i enter inside the pod?**
 
 VVVVVVVVVVV.IIIIII command - kebectl exec -it nginx-pod -n nginx -- bash
 use exit command to get out from pod.
@@ -135,18 +135,18 @@ kubectl : → communicates with the cluster
 
 Kubernetes Deployment → manages the pods
 
-🚀 what Deployment will do
-1. Scaling : command - kubectl scale deployment my-app --replicas=5 (Only this command run 5 pods created)
+# 🚀 what Deployment will do
+**1. Scaling : command - kubectl scale deployment my-app --replicas=5 (Only this command run 5 pods created)**
    
-2. Auto-healing : if any pod get deleted/crashed DEPLOYEMENT will automatically created pod.
+**2. Auto-healing : if any pod get deleted/crashed DEPLOYEMENT will automatically created pod.**
 
-3. Rolling Update : kubectl set image deployment/my-app nginx=nginx:latest (NEW/OLDER VERSION CREATED WITHOUT ANY DOWNTIME. Means sare container ko ek sath down nhi karta kuch ko up rakhta hai kuch container ko create karta hai fir baki ke container ko up kar deta hai)
+**3. Rolling Update : kubectl set image deployment/my-app nginx=nginx:latest (NEW/OLDER VERSION CREATED WITHOUT ANY DOWNTIME. Means sare container ko ek sath down nhi karta kuch ko up rakhta hai kuch container ko create karta hai fir baki ke container ko up kar deta hai)**
 
-4. Rollback : kubectl rollout undo deployment my-app (Go to previous Version)
+**4. Rollback : kubectl rollout undo deployment my-app (Go to previous Version)**
 
 
-Now Steps How to create kind deployment
-Step 1: vim deployemt.yml
+# Now Steps How to create kind deployment
+**Step 1: vim deployemt.yml**
 
 ```yaml
 
@@ -175,7 +175,7 @@ spec:
 ```
 
 
-Step 2 : command - kubectl apply -f deployement.yml
+**Step 2 : command - kubectl apply -f deployement.yml**
 command : kubectl get pods -n nginx
 command :  kubectl scale deployment my-app --replicas=5
 
@@ -437,29 +437,29 @@ site will running in browser PublicIP:81
 
 ## Maka a mini project from github
 
-Step 1 : git clone URL
+**Step 1 : git clone URL**
 
-Step 2 : docker build -t note-app-k8s .
+**Step 2 : docker build -t note-app-k8s .**
 
-Step 3 : docker images   ( images note-app-k8s locally not working. isko docker hub par phuchana padega)
+**Step 3 : docker images   ( images note-app-k8s locally not working. isko docker hub par phuchana padega)**
 
-Step 4 : Login DockerHub. Go to account setting and go in peronal access tokens. Generate token. it will give you Run and password
+**Step 4 : Login DockerHub. Go to account setting and go in peronal access tokens. Generate token. it will give you Run and password**
 
-Step 5 : paste run of Tocken command in CLI  and password. Login succeeded
+**Step 5 : paste run of Tocken command in CLI  and password. Login succeeded**
 
-Step 6 : docker build -t note-app-k8s .
+**Step 6 : docker build -t note-app-k8s .**
 
 (permission denied ka error may be aaye so for that command : sudo usermod -aG docker $USER)
 
-Step 7 : docker image tag note-app-k8s:latest archanakidocker/note-app-k8s:latest (tag your image with docker hub)
+**Step 7 : docker image tag note-app-k8s:latest archanakidocker/note-app-k8s:latest (tag your image with docker hub)**
 
-Step 8 : docker images
+**Step 8 : docker images**
 
-Step 9 : docker push archanakidocker/note-app-k8s:latest   (Pushed in my docker hub repo)
+**Step 9 : docker push archanakidocker/note-app-k8s:latest   (Pushed in my docker hub repo)**
 
-Step 10. mkdir k8s, cd k8s,
+**Step 10. mkdir k8s, cd k8s**
 
-Step 11. vim deployment.yml
+**Step 11. vim deployment.yml**
 
 ```yml
 
@@ -490,7 +490,7 @@ spec:
 
 command- kubectl apply -f deployment.yml
 
-Step 12: vim namespace.yml
+**Step 12: vim namespace.yml**
 
 ```yml
 kind: namespace
@@ -502,7 +502,7 @@ metadata:
 
 command- kubectl apply -f namespace.yml
 
-Step 13: vim service.yml
+**Step 13: vim service.yml**
 
 ```yml
 kind: service
@@ -524,13 +524,13 @@ spec:
 command- kubectl apply -f service.yml
 
 
- Step 14: kubectl get pods -n notes-app    (container is creating)
+ **Step 14: kubectl get pods -n notes-app    (container is creating)**
 
- Step 15: kubectl port-forward service/notes-app-service -n notes-app 8000:8000 --address=0.0.0.0
+ **Step 15: kubectl port-forward service/notes-app-service -n notes-app 8000:8000 --address=0.0.0.0**
 
- Step 16: Go in EC2 add security group port no- 8000
+ **Step 16: Go in EC2 add security group port no- 8000**
 
- Step 17 : No copy Ip of EC2 192.62.36.45:8000 ( Application running)
+ **Step 17 : No copy Ip of EC2 192.62.36.45:8000 ( Application running)**
 
 
 
@@ -569,7 +569,7 @@ spec:
         - containerPort: 8000
 ```
 
- Step 2. vim service.yml     -> namespace change note-app to nginx
+ **Step 2. vim service.yml     -> namespace change note-app to nginx**
 
 ```yml
 kind: service
@@ -588,7 +588,7 @@ spec:
 
 ```
  
-Step 3. Note : kubectl get deployment -n notes-app 
+**Step 3. Note : kubectl get deployment -n notes-app**
  
         kubectl delete deployment/notes-app-deployment -n  notes-app
 
@@ -598,14 +598,14 @@ Step 3. Note : kubectl get deployment -n notes-app
 
  I am delete this because i have changes there namesapce.
 
- Step 4. 
+**Step 4.**
  kubectl apply -f deployment.yml -f service.yml
 
  kubectl get pods -n nginx
 
  kubectl get svc -n nginx
 
- Step 5. Ingress controller are used to help in routing at cluster level.
+**Step 5. Ingress controller are used to help in routing at cluster level.**
 
 command for ingress controller - go to folder    ->     cd /home/ubuntu/kubernetes-in-one-shot
 
@@ -617,7 +617,7 @@ kubectl get pods -n ingress-nginx
 
 kubectl get svc -n ingress-nginx
 
-Step 6. Now go to nginx folder and create vim ingress.yml
+**Step 6. Now go to nginx folder and create vim ingress.yml**
 
 ```
 apiVersion: networking.k8s.io/v1
@@ -654,7 +654,7 @@ kubectl get ing -n nginx  (ip address is missing so for getting it ingress contr
 
 kubectl get all -n nginx
 
-Step 7. Now Ingress controller has exposed
+**Step 7. Now Ingress controller has exposed**
 
 kubectl get svc -n ingress-nginx   ( you will get ingress-nginx-controller name)
 
@@ -664,9 +664,9 @@ command - sudo -E kubectl port-forward service/ingress-nginx-controller -n ingre
 
 it means that in port 80 ingress controller run.
 
-Step 8. In Ec2 add port 80 in inbound rule.
+**Step 8. In Ec2 add port 80 in inbound rule.**
 
-
+Application will up and running
 
 # StatefulSets: Pods carry state. when i will delete one pod in statefulset. same number with same name pod will created.
 
