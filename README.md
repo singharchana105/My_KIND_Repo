@@ -678,18 +678,19 @@ But mysql,mongoDB are statefull application. -> statefulsets
 
 Step 1. vim namespace.yml
 
---- 
+```
 kind: Namespace
-apiVersion: v1
-metadata: 
-  name: mysql
 
----
-kubectl apply -f namespace 
+apiVersion: v1
+
+metadata: 
+
+  name: mysql
+```
+command - kubectl apply -f namespace 
 
 Step 2. vim statefulsets.yml
-
---- 
+```
 kind: StatefulSet
 apiVersion: apps/v1
 metadata:
@@ -729,7 +730,7 @@ spec:
           resources:
           requests:
            storage: 1Gi
-
+```
  
  
 
