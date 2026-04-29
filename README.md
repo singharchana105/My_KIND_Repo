@@ -783,6 +783,68 @@ That the speciallity of StatefullSets. (Bcz In deployment if pods delete it will
 
 ## Config Map & Secrets:
 
+env variable or values should be in file.
+**Step 1.**
+vim configMap.yml
+```
+kind: Configmap
+apiVersion: V1
+metadata:
+ name: mysql-config-map
+ namespace: mysql
+data:
+  MYSQL_DATABASE: devops
+```
+kubectl apply -f configMap.yml
+
+kubectl get configMap -n nginx
+
+**Step 2.**
+Go in statefullset yml file -> vim statefulsets.yml
+```
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: mysql-statefulset
+  namespace: mysql
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mysql
+   
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      serviceName: mysql-service
+      containers:
+      - name: mysql
+        image: mysql:8.0
+        ports:
+        - containerPort: 3306
+       env:
+       -name: MYSQL_ROOT_PASSWORD
+        value: root
+         **- name: MySQL_DATABASE**
+        valueFrom:
+          configMapKeyref:
+            name: mysql-config-map
+            key: MYSQL_DATABASE
+
+       volumeMounts:
+        - name: mysql-data
+          mountPath: /var/lib/mysql
+      volumeClaimTemplates:
+        - metadata:
+           name: mysql-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+          resources:
+          requests:
+           storage: 1Gi
+
 
 
 
