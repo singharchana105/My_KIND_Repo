@@ -1013,9 +1013,57 @@ Type of probe:
 Liveness probe
 Readiness Probe
 Startup probe
- 
- 
 
+**Example**
+ vim deployment.yml
+ ```
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: notes-app-deployment
+  labels:
+    app: notes-app
+   namespace: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notes-app
+  template:
+    metadata:
+      labels:
+        app: notes-app
+    spec:
+      containers:
+      - name: notes-app
+        image: archanakidocker/note-app-k8s
+        ports:
+        - containerPort: 8000
+**     livenessProbe:
+           httpGet:
+             path: /
+             port: 8000
+        readnessProbe:
+           httpGet:
+             path: /
+             port: 8000
+**
+```
+kubectl apply -f service.yml
+
+kubectl apply -f deployment.yml
+
+kubectl get pods -n nginx
+
+kubectl describe pods podname -n nginx
+
+sudo -E kubectl port-forward service/notes-app-service -n nginx 8000:8000 --address=0.0.0.0
+
+
+
+# Taints / Tolerations :
+**Taints : Taint is a way of telling your k8s cluster that on particular nodes you can not sechedule the pods.**
+**Tolerations : if any taint server you want to run then you can toleration that.**
 
 
 
