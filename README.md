@@ -949,31 +949,70 @@ Count limits for objects (e.g. Pods, Services, ConfigMaps)
 
 
 ``` 
-kind: Deployment
+
 apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: notes-app-deployment
-  labels:
-    app: notes-app
-   namespace: nginx
+  name: nginx
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      app: notes-app
+      app: nginx
+
   template:
     metadata:
       labels:
-        app: notes-app
+        app: nginx
     spec:
       containers:
-      - name: notes-app
-        image: archanakidocker/note-app-k8s
+      - name: nginx
+        image: nginx:latest
         ports:
-        - containerPort: 8000
+**     - containerPort: 80
+         resources:
+           requests:
+             cpu: 100m
+             memory: 12Mi
+           limits:
+              cpu: 200m
+              memory: 256Mi
+**
+      volumeMounts:
+       - mountPath: /var/www/html
+         name: my-volume
+      volumes:
+        - name: my-volume
+          persistentVolumeClaim:
+             claimName: local-pvc
 
 ```
+kubectl apply -f namespace.yml 
 
+kubectl apply -f persistentVolume.yml
+
+kubectl get pv -n nginx   (Released) then delete it
+
+kubectl detete pv local-pv -n nginx
+
+kubectl apply -f persistentVolume.yml
+
+Kubectl apply -f persistentVolumeclaim.yml
+
+kebectl apply -f Deployment.yml
+
+kubectl get pods -n nginx
+
+kebectl describe pod podname -n nginx.
+
+
+# Probes : Pod is working or not. To check my pods are running or not. we use probes
+
+Type of probe: 
+
+Liveness probe
+Readiness Probe
+Startup probe
  
  
 
