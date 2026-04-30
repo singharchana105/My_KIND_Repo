@@ -1061,9 +1061,70 @@ sudo -E kubectl port-forward service/notes-app-service -n nginx 8000:8000 --addr
 
 
 
-# Taints / Tolerations :
-**Taints : Taint is a way of telling your k8s cluster that on particular nodes you can not sechedule the pods.**
-**Tolerations : if any taint server you want to run then you can toleration that.**
+# Taints / Tolerations : 
+**Taints : Taint is a way of telling your k8s cluster that on particular nodes you can not sechedule the pods. control plan is also a taints pods**
+**Tolerations : if any taint server/nodes you want to run then you can toleration it.**
+
+**How to do Taints**
+
+vim pod.yml
+```
+kind: pod
+apiversion: v1
+metadata:
+  name: nginx-pod
+  namespace: nginx
+spec:
+  containers:
+    -name: nginx
+     image: nginx:latest
+     ports:
+    -containerPort: 80
+
+```
+kubectl get pods -n nginx
+
+kubectl get nodes
+
+**kubectl taint node nodename prod=true:NoSchedule**
+
+then when i create pods -> kubectl apply -f pod.yml && kubectl get pods -n nginx (status of pods is pending)
+
+why pods status is pending? because my nodes got taints.
+
+**How to do untaints?** kubectl taint node nodename prod=true:NoSchedule-     ( - means remove taints)
+
+# Tolerations : 
+
+vim pod.yml
+```
+kind: pod
+apiversion: v1
+metadata:
+  name: nginx-pod
+  namespace: nginx
+spec:
+  containers:
+    -name: nginx
+     image: nginx:latest
+     ports:
+    -containerPort: 80
+* tolerations:
+    - key: "prod"
+      operator: "Equel"
+      value: "true"
+*     effect: "NoSchedule"    
+
+```
+
+kubectl apply -f pod.yml
+
+kebectl get pods -n nginx    (pods will running)
+
+
+
+
+
 
 
 
