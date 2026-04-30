@@ -1122,6 +1122,22 @@ kubectl apply -f pod.yml
 kebectl get pods -n nginx    (pods will running)
 
 
+# HPA (Horizontal Pod Autoscalling) : Pod ke number ko badhate hai (pod ka replica banate hai). but kisi aplication 
+# VPA (Vertial pod Autoscalling) : pod ki request and limits ko badha dete h. statefullset application ke liye user hota h.
+# KEDA(Kubernetes event driven autoscalling.) based on nature of matrix/events KEDA HPA Ya VPA me se koi bhi lga deta hai.
+
+Now hoe can you see matrix of any node or pods?
+
+kubectl top node  ( Metrix API not available) 
+
+kubectl top pods  ( Metrix API not available) 
+
+kubectl get ns  -> output kube-system me ek metrix server hona chahiye.
+
+Then how to install Metrix API **kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.6.1/components.yaml** (but sometimes its gives error
+
+
+
 
 
 
