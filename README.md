@@ -934,8 +934,45 @@ mysql -u root -p
 enterpassword - 
 
 
+**Application is UP and Running**
 
 
+# Resource Quota : A ResourceQuota is an object in Kubernetes that limits the total consumption of resources. It apply at the namespace level, not on individual Pods
+
+Limits the resources. how many resources(CPU,Memory) will taken by one pods.
+
+It define :- 
+Maximum total CPU usage
+Maximum total memory usage
+Limits on storage (persistent volumes)
+Count limits for objects (e.g. Pods, Services, ConfigMaps)
+
+
+``` 
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: notes-app-deployment
+  labels:
+    app: notes-app
+   namespace: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notes-app
+  template:
+    metadata:
+      labels:
+        app: notes-app
+    spec:
+      containers:
+      - name: notes-app
+        image: archanakidocker/note-app-k8s
+        ports:
+        - containerPort: 8000
+
+```
 
  
  
