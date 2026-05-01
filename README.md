@@ -1136,6 +1136,12 @@ kubectl get ns  -> output kube-system me ek metrix server hona chahiye.
 
 Then how to install Metrix API **kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.6.1/components.yaml** (but sometimes its gives error
 
+Add the security bypass to deployment under container.args
+
+- --kubelet-insecure-tls
+  
+- --kubelet-preferred-address-types=InternalIP,Hostname,ExternalIP
+
 
 
 
