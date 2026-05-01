@@ -1205,7 +1205,36 @@ template:
 ```
 kubectl apply -f deployment.yml
    
-**Step 3.**
+**Step 3.** Now i want this deployment publicaly accesible. for that make service.yml
+```
+kind: Service
+apiVersion: v1
+mrtadata:
+   name: apache-service
+   namespace: apache
+spec:
+   selector:
+      app: apache
+   ports:
+    - protocol: TCP
+      port: 80            # exposed port in the cluster
+      targetPort: 80      # container port
+   type: ClusterIP
+
+```
+kubectl apply -f service.yml
+
+kubectl get all -n apache
+
+**If you want to access a any pods/service curl http://apache-service.apache.svc.cluster.local
+
+now ports exposed -> sudo -E kubeclt port-forward service/apache-service -n apache 82:80 --address=0.0.0.0
+
+Now add security rule in EC2 for port = 82
+
+
+
+       
 
 
 
