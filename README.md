@@ -1126,7 +1126,7 @@ kebectl get pods -n nginx    (pods will running)
 # VPA (Vertial pod Autoscalling) : pod ki request and limits ko badha dete h. statefullset application ke liye user hota h.
 # KEDA(Kubernetes event driven autoscalling.) based on nature of matrix/events KEDA HPA Ya VPA me se koi bhi lga deta hai.
 
-Now hoe can you see matrix of any node or pods?
+Now how can you see matrix of any node or pods?
 
 kubectl top node  ( Metrix API not available) 
 
@@ -1134,13 +1134,79 @@ kubectl top pods  ( Metrix API not available)
 
 kubectl get ns  -> output kube-system me ek metrix server hona chahiye.
 
-Then how to install Metrix API **kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.6.1/components.yaml** (but sometimes its gives error
+Then how to install Metrix API? Kind cluster install Metrics Server command -> **kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.6.1/components.yaml** (but sometimes its gives error)
+
+Edit the Metrics Server Deployment ->
+
+kubectl -n kube-system edit deployment metrics-server  (one yml file open ) (find where is container:  -args: and paste below code)
 
 Add the security bypass to deployment under container.args
 
 - --kubelet-insecure-tls
   
 - --kubelet-preferred-address-types=InternalIP,Hostname,ExternalIP
+
+Restart the deployment  ->  kubectl -n kube-system rollout restart deployment metrics-server
+
+Verify if the metrics server is running
+
+kubectl get pods -n kube-system 
+
+kubectl top nodes ( Metrics show ho jayega).
+
+# HPA (For HPA take apache web server where we deploye our web server)
+
+mkdir apache
+
+cd apache/
+
+**Step 1.**
+vim Namespace.yml
+```
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: apache
+```
+kubectl apply -f Namespace.yml
+
+**Step 2.** 
+vim deployment.yml
+```
+kind: Deployment
+apiVersion: v1
+metadata:
+  name: apche-deployment
+  namespace: apache
+spec:
+  replicas: 1
+  selector:
+   matchLables:
+     app: apache
+template:
+  metadata:
+    name: apache
+    labels:
+      app: apache
+ spec:
+  containers:
+   - name: apache
+     image: httpd:latest
+     ports:
+      - containerPort: 80
+     resources:
+       requests:
+          cpu: 100m
+          memory: 128Mi
+       limits:
+          cpu: 200m
+          memory: 256Mi
+
+```
+kubectl apply -f deployment.yml
+   
+**Step 3.**
+
 
 
 
