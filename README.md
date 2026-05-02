@@ -385,13 +385,13 @@ command - kubectl describe pod/podname -n nginx
 
 Now how we get data from /var/www/html in mnt/data
 
-command - kubectl get pods -n nginix -o wide (find node kon se cluster par chal rha hai.)
+command - kubectl get pods -n nginx -o wide (find node kon se cluster par chal rha hai.)
 
 command - kubectl get nodes
 
 command - docker ps (find container id of that node)
 
-command - docker exec -it containerID bsh  (By this command you will go inside the container )
+command - docker exec -it containerID bash  (By this command you will go inside the container )
 
 command - ls , cd mnt,ls,data exit
 
