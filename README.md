@@ -1232,6 +1232,12 @@ now ports exposed -> sudo -E kubeclt port-forward service/apache-service -n apac
 
 Now add security rule in EC2 for port = 82
 
+apche working.
+
+Manuall scalling
+
+
+
 vim
 
 
