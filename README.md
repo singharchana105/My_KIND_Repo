@@ -6,7 +6,7 @@
 
 **Step 3. After Running docker ps command ERROR Through permission denied.**
 sudo usermod -aG docker $USER && newgrp docker
-
+ 
 now if you run docker ps. Docker is running.
 kubectl version
 
