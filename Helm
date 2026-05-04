@@ -1,0 +1,8 @@
+#How you bandle your application ? How can you deploy as helm chart on K8S?
+
+Step 1. mkdir -p best-commerce/{payments,shipping}
+Step 2. cd best-commerce
+Step 3. helm create payments
+Step 4. helm create shipping
+Step 5. ls -ltr  [it create chart.yml,value.yml,templates folder]
+
