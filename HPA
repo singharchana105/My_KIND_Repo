@@ -1,21 +1,22 @@
-# HPA (For HPA take apache web server where we deploye our web server)
+#HPA (For HPA take apache web server where we deploye our web server)
 
 mkdir apache
 
 cd apache/
 
-**Step 1.**
-vim Namespace.yml
+**Step 1.** vim Namespace.yml
+
 ```
 kind: Namespace
 apiVersion: v1
 metadata:
   name: apache
 ```
-kubectl apply -f Namespace.yml
 
-**Step 2.** 
-vim deployment.yml
+command: kubectl apply -f Namespace.yml
+
+**Step 2.**  vim deployment.yml
+
 ```
 kind: Deployment
 apiVersion: v1
@@ -47,6 +48,7 @@ template:
           memory: 256Mi
 
 ```
+
 kubectl apply -f deployment.yml
    
 **Step 3.** Now i want this deployment publicaly accesible. for that make service.yml
