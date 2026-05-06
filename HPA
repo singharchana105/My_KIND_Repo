@@ -1,3 +1,5 @@
+
+
 #HPA (For HPA take apache web server where we deploye our web server)
 
 mkdir apache
@@ -68,13 +70,13 @@ spec:
    type: ClusterIP
 
 ```
-kubectl apply -f service.yml
+command: kubectl apply -f service.yml
 
-kubectl get all -n apache
+command: kubectl get all -n apache
 
-**If you want to access any pods/service curl http://apache-service.apache.svc.cluster.local
+**If you want to access any pods/service command: curl http://apache-service.apache.svc.cluster.local
 
-now ports exposed -> sudo -E kubeclt port-forward service/apache-service -n apache 82:80 --address=0.0.0.0
+now ports exposed -> command: sudo -E kubeclt port-forward service/apache-service -n apache 82:80 --address=0.0.0.0
 
 Now add security rule in EC2 for port = 82
 
