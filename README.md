@@ -37,6 +37,16 @@ nodes:
 ```
 
 
+Cluster
+```
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+- role: worker
+- role: worker
+```
+  
 **Step 5:**
 command - kind create cluster --name archanacluster --config=config.yml
 
